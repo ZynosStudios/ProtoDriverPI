@@ -5,6 +5,12 @@ name = "pypi"
 
 [packages]
 "luma.led-matrix" = "*"
+flask = "*"
+flask-restful = "*"
+requests = "*"
+psutil = "*"
+sqlalchemy = "*"
+pillow = "*"
 
 [dev-packages]
 
