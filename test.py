@@ -2,7 +2,6 @@ import requests
 import platform
 
 
-
 BASE = "http://127.0.0.1:5000/"
 
 def run_tests():
@@ -28,9 +27,12 @@ def run_tests():
     response = requests.get(BASE + "getimage/test.png")
     print(response)
 
-    if platform.uname().processor == "arm":
+    print(platform.uname())
+
+    if platform.uname().machine == "armv6l":
         import leddriver
         leddriver.display_image()
+        input('Press ENTER to continue...')
 
 if __name__ == "__main__":
     run_tests()

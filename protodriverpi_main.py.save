@@ -23,7 +23,7 @@ class ProtoDriver:
         with open('out.log', 'w') as out, open('err.log', 'w') as err:
             command = ['python', 'pdapi.py']
             with tidy_process(command, stdout=out, stderr=err) as proc:
-                sleep(5)  # Needed to give flask enough time 
+                sleep(3)  # Needed to give flask enough time 
 			  # to spin up before testing
                 test.run_tests()
 

@@ -5,13 +5,12 @@ from PIL import Image
 
 
 serial = spi(port=0, device=0, gpio=noop(), block_orientation=-90)
-device = max7219(serial, width=32, height=8)
+device = max7219(serial, width=8, height=32, rotate=1)
 
-img = Image.open("api_uploaded_files/test.png")
 
 def display_image():
-    with canvas(device) as draw:
-        draw.draw(img)
+    img = Image.open("api_uploaded_files/test.png").convert("1")
+    device.display(img)
 
 def clear_display():
     pass
