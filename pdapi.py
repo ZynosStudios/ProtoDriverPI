@@ -5,6 +5,14 @@ from PIL import Image
 
 import os
 import io
+import platform
+
+IS_PI = False
+
+if platform.uname().machine == "armv6l":
+    import leddriver
+    IS_PI = True
+
 
 
 app = Flask(__name__)
@@ -73,18 +81,33 @@ class GetImage(Resource):
         find_file(filename)
         return get_response_image(os.path.join(UPLOAD_DIRECTORY, filename))
 
+
 class GetAllImages(Resource):
     pass
 
-class DisplayImage(Resource):
-    pass
 
-class ClearDisplay(Resource):
-    pass
+if IS_PI:
+
+    class DisplayImage(Resource):
+        def get(self, filename):
+            find_file(filename)
+            leddriver.display_image(os.path.join(UPLOAD_DIRECTORY, filename))
+            return "Image displayed", 200
+
+    class ClearDisplay(Resource):
+        def get(self):
+            leddriver.clear_display()
+            return "Display Cleared", 200
+
 
 api.add_resource(Ping, "/ping")
 api.add_resource(UploadImage, "/uploadimage/<filename>")
 api.add_resource(UpdateImage, "/updateimage/<filename>")
 api.add_resource(DeleteImage, "/deleteimage/<filename>")
 api.add_resource(GetImage, "/getimage/<filename>")
+
+if IS_PI:
+    api.add_resource(DisplayImage, "/displayimage/<filename>")
+    api.add_resource(ClearDisplay, "/cleardisplay")
+
 app.run(debug=True, port=5000)

@@ -1,5 +1,5 @@
 import requests
-import platform
+from time import sleep
 
 
 BASE = "http://127.0.0.1:5000/"
@@ -27,12 +27,16 @@ def run_tests():
     response = requests.get(BASE + "getimage/test.png")
     print(response)
 
-    print(platform.uname())
+    response = requests.get(BASE + "displayimage/test.png")
+    print(response)
 
-    if platform.uname().machine == "armv6l":
-        import leddriver
-        leddriver.display_image()
-        input('Press ENTER to continue...')
+    sleep(3)
+
+    response = requests.get(BASE + "cleardisplay")
+    print(response)
+
+    input("Press Enter to exit")
+
 
 if __name__ == "__main__":
     run_tests()
