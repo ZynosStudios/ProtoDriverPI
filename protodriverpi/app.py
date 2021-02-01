@@ -1,5 +1,5 @@
 from flask import Flask, request
-from flask_restful import Resource, Api, abort, reqparse
+from flask_restful import Resource, Api, abort
 from base64 import encodebytes
 from PIL import Image
 
@@ -110,4 +110,11 @@ if IS_PI:
     api.add_resource(DisplayImage, "/displayimage/<filename>")
     api.add_resource(ClearDisplay, "/cleardisplay")
 
-app.run(debug=True, port=5000)
+
+def run(**kwargs):
+    app.run(**kwargs)
+
+
+if __name__ == "__main__":
+    print("Starting Api...")
+    run(debug=True, port=5000)
