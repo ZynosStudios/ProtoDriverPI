@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"luma.led-matrix" = "*"
+flask = "*"
+flask-restful = "*"
+requests = "*"
+psutil = "*"
+sqlalchemy = "*"
+pillow = "*"
+twine = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"
