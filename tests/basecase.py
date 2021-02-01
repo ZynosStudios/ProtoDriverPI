@@ -1,5 +1,4 @@
 import unittest
-import os
 
 from protodriverpi.app import app
 
