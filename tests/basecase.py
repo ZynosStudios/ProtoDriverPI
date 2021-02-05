@@ -1,6 +1,6 @@
 import unittest
 
-from protodriverpi.app import app
+from protodriver.app import app
 
 
 class BaseCase(unittest.TestCase):
