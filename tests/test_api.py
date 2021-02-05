@@ -37,6 +37,22 @@ class MyTestCase(BaseCase):
         self.assertEqual(bytes, type(response.data))
         self.assertEqual(200, response.status_code)
 
+    def test_getallimages(self):
+        temp = BytesIO()
+        img = Image.new('RGBA', size=(50, 50), color=(155, 0, 0))
+        img.save(temp, format='png')
+        self.app.post("uploadimage/test.png", data=temp.getvalue())
+        self.app.post("uploadimage/test2.png", data=temp.getvalue())
+        response = self.app.get("getallimages")
+        self.app.delete("deleteimage/test.png")
+        self.app.delete("deleteimage/test2.png")
+        self.assertEqual(str, type(response.json["data"][0][0]))
+        self.assertEqual(str, type(response.json["data"][0][1]))
+        self.assertEqual(str, type(response.json["data"][1][0]))
+        self.assertEqual(str, type(response.json["data"][1][1]))
+        self.assertEqual(200, response.status_code)
+
+
     if platform.uname().machine == "armv6l":
 
         def test_displayimage(self):

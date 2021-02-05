@@ -1,18 +1,20 @@
-from flask import Flask, request
-from flask_restful import Resource, Api, abort
-from base64 import encodebytes
-from PIL import Image
-
 import os
 import io
 import platform
+from base64 import encodebytes
+
+from flask import Flask, request
+from flask_restful import Resource, Api, abort
+
+from PIL import Image
+
+
 
 IS_PI = False
 
 if platform.uname().machine == "armv6l":
-    import leddriver
+    from protodriver import leddriver
     IS_PI = True
-
 
 
 app = Flask(__name__)
@@ -83,7 +85,13 @@ class GetImage(Resource):
 
 
 class GetAllImages(Resource):
-    pass
+    def get(self):
+        files = [f for f in os.listdir(UPLOAD_DIRECTORY) if os.path.isfile(os.path.join(UPLOAD_DIRECTORY, f))]
+        response = []
+        for file in files:
+            response.append((file, get_response_image(os.path.join(UPLOAD_DIRECTORY, file))))
+
+        return {"data": response}
 
 
 if IS_PI:
@@ -105,6 +113,7 @@ api.add_resource(UploadImage, "/uploadimage/<filename>")
 api.add_resource(UpdateImage, "/updateimage/<filename>")
 api.add_resource(DeleteImage, "/deleteimage/<filename>")
 api.add_resource(GetImage, "/getimage/<filename>")
+api.add_resource(GetAllImages, "/getallimages")
 
 if IS_PI:
     api.add_resource(DisplayImage, "/displayimage/<filename>")
