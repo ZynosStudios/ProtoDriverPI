@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="ProtoDriver",
-    version="0.0.1",
+    version="0.0.2a1",
     author="ZynosStudios",
     author_email="zynosstudios@gmail.com",
     description="A simple Raspberry Pi web api for driving a MAX7219 dot matrix display",
