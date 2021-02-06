@@ -9,7 +9,6 @@ from flask_restful import Resource, Api, abort
 from PIL import Image
 
 
-
 IS_PI = False
 
 if platform.uname().machine == "armv6l":
